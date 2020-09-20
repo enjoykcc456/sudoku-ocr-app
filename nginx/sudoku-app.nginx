@@ -1,0 +1,35 @@
+server {
+    listen 80;
+
+    # location of the root directory, from where all the static files will be served
+    root /home/gordon/Projects/personal/ocr_sudoku/sudoku-app/build;
+
+    # configure the default file that is returned when the client requests a URL that
+    # ends with a slash or doesn't have a path at all
+    index index.html;
+
+    location / {
+        # The try_files directive defined for this location indicates that
+        # nginx needs to serve the path given in the request URL as a file ($uri)
+        # for a first choice. If a file does not exist with the requested name, then
+        # it should try to serve it as a directory ($uri/). If neither of the two
+        # options work then it should return a 404 error, which is the "resource not found"
+        # error defined in the HTTP protocol.
+        try_files $uri $uri/ =404;
+
+        # turns caching off for all the static files in the React project
+        add_header Cache-Control "no-cache";
+    }
+
+    location /static {
+        # expiration set to 1 year and cache set to public to indicate that any cache is free to
+        # store a copy of this file (any static file request) for the indicated period of time
+        expires 1y;
+        add_header Cache-Control "public";
+    }
+
+    location /api {
+        include proxy_params;
+        proxy_pass http://localhost:5000;
+    }
+}
