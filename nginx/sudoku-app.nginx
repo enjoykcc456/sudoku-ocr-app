@@ -1,8 +1,18 @@
 server {
     listen 80;
+    listen [::]:80;
+    server_name _;
+    return 301 https://localhost.com$request_uri;
+}
+
+server {
+    # listen 80;
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
+    server_name localhost.com www.localhost.com;
 
     # location of the root directory, from where all the static files will be served
-    root /home/gordon/Projects/personal/ocr_sudoku/sudoku-app/build;
+    root /home/gordon/Projects/personal/ocr_sudoku/sudoku-app;
 
     # configure the default file that is returned when the client requests a URL that
     # ends with a slash or doesn't have a path at all
