@@ -20,5 +20,3 @@ Inspired by the article from [Pyimagesearch](https://www.pyimagesearch.com/2020/
 
 ### Works In Progress
 - Frontend with photo taking capability
-- Integration with backend
-- App Dockerization
